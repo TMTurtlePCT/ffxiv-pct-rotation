@@ -204,9 +204,6 @@ export class Config extends React.Component {
 		this.state = { // NOT DEFAULTS
 			stepSize : 0,
 			spellSpeed: 0,
-			criticalHit: 0,
-			directHit: 0,
-			determination: 0,
 			animationLock: 0,
 			casterTax: 0,
 			timeTillFirstManaTick: 0,
@@ -221,10 +218,27 @@ export class Config extends React.Component {
 			overrideStacks: 0,
 			overrideEnabled: true,
 			/////////
-			dirty: false,
+			criticalHit: 0,
+			determination: 0,
+			directHit: 0,
+			/////////
+			dirtyEdit: false,
+			dirtyDamage: false,
 		};
 
-		this.handleSubmit = (event => {
+		this.submitWithoutReset = (event => {
+			let config = {
+				...this.config,
+				criticalHit: this.state.criticalHit,
+				determination: this.state.determination,
+				directHit: this.state.directHit,
+			}
+			this.setConfigWithoutRestart(config);
+			this.setState({dirtyDamage: false});
+			event.preventDefault();
+		});
+
+		this.submitAndReset = (event => {
 			if (this.#resourceOverridesAreValid()) {
 				let seed = this.state.randomSeed;
 				if (seed.length === 0) {
@@ -234,10 +248,8 @@ export class Config extends React.Component {
 					this.setState({randomSeed: seed});
 				}
 				let config = {
+					...this.config,
 					spellSpeed: this.state.spellSpeed,
-					criticalHit: this.state.criticalHit,
-					directHit: this.state.directHit,
-					determination: this.state.determination,
 					animationLock: this.state.animationLock,
 					casterTax: this.state.casterTax,
 					countdown: this.state.countdown,
@@ -245,57 +257,45 @@ export class Config extends React.Component {
 					randomSeed: seed,
 					procMode: this.state.procMode,
 					extendedBuffTimes: this.state.extendedBuffTimes,
-					initialResourceOverrides: this.state.initialResourceOverrides // info only
+					initialResourceOverrides: this.state.initialResourceOverrides, // info only
 				};
 				this.setConfigAndRestart(config);
-				this.setState({dirty: false});
+				this.setState({dirtyEdit: false});
 				controller.scrollToTime();
 			}
 			event.preventDefault();
 		});
 
 		this.setSpellSpeed = (val => {
-			this.setState({spellSpeed: val, dirty: true});
+			this.setState({spellSpeed: val, dirtyEdit: true});
 		});
-
-		this.setCriticalHit = (val => {
-			this.setState({criticalHit: val, dirty: true});
-		});
-
-		this.setDirectHit = (val => {
-			this.setState({directHit: val, dirty: true});
-		});
-
-		this.setDetermination = (val => {
-			this.setState({determination: val, dirty: true});
-		}).bind(this);
 
 		this.setAnimationLock = (val => {
-			this.setState({animationLock: val, dirty: true});
+			this.setState({animationLock: val, dirtyEdit: true});
 		});
 
 		this.setCasterTax = (val => {
-			this.setState({casterTax: val, dirty: true});
+			this.setState({casterTax: val, dirtyEdit: true});
 		});
 
 		this.setTimeTillFirstManaTick = (val => {
-			this.setState({timeTillFirstManaTick: val, dirty: true});
+			this.setState({timeTillFirstManaTick: val, dirtyEdit: true});
 		});
 
 		this.setCountdown = (val => {
-			this.setState({countdown: val, dirty: true});
+			this.setState({countdown: val, dirtyEdit: true});
 		});
 
 		this.setRandomSeed = (val => {
-			this.setState({randomSeed: val, dirty: true});
+			this.setState({randomSeed: val, dirtyEdit: true});
 		});
 
 		this.setExtendedBuffTimes = (evt => {
-			this.setState({extendedBuffTimes: evt.target.checked, dirty: true});
+			this.setState({extendedBuffTimes: evt.target.checked, dirtyEdit: true});
 		});
 
 		this.setProcMode = (evt => {
-			this.setState({procMode: evt.target.value, dirty: true});
+			this.setState({procMode: evt.target.value, dirtyEdit: true});
 		});
 
 		this.setOverrideTimer = (val => {
@@ -315,8 +315,20 @@ export class Config extends React.Component {
 					break;
 				}
 			}
-			this.setState({initialResourceOverrides: overrides, dirty: true});
+			this.setState({initialResourceOverrides: overrides, dirtyEdit: true});
 		});
+
+		this.setCriticalHit = (val => {
+			this.setState({criticalHit: val, dirtyDamage: true});
+		})
+
+		this.setDetermination = (val => {
+			this.setState({determination: val, dirtyDamage: true});
+		})
+
+		this.setDirectHit = (val => {
+			this.setState({directHit: val, dirtyDamage: true});
+		})
 	}
 
 	// call this whenver the list of options has potentially changed
@@ -339,7 +351,8 @@ export class Config extends React.Component {
 		updateConfigDisplay = ((config)=>{
 			this.setState(config);
 			this.setState({
-				dirty: false,
+				dirtyEdit: false,
+				dirtyDamage: false,
 				selectedOverrideResource: this.#getFirstAddable(config.initialResourceOverrides)
 			});
 		});
@@ -480,7 +493,7 @@ export class Config extends React.Component {
 
 		let overrides = this.state.initialResourceOverrides;
 		overrides.push(props);
-		this.setState({initialResourceOverrides: overrides, dirty: true});
+		this.setState({initialResourceOverrides: overrides, dirtyEdit: true});
 	}
 
 	#addResourceOverrideNode() {
@@ -620,7 +633,7 @@ export class Config extends React.Component {
 			</div>}/>
 			</span>} content={<div>
 				<button onClick={evt=>{
-					this.setState({ initialResourceOverrides: [], dirty: true });
+					this.setState({ initialResourceOverrides: [], dirtyEdit: true });
 					evt.preventDefault();
 				}}>clear all overrides</button>
 				{resourceOverridesDisplayNodes}
@@ -629,11 +642,24 @@ export class Config extends React.Component {
 		</div>;
 	}
 
+	setConfigWithoutRestart(config) {
+		if (isNaN(parseFloat(config.criticalHit)) ||
+			isNaN(parseFloat(config.determination)) ||
+			isNaN(parseFloat(config.directHit))) {
+			window.alert("Some config fields are not numbers!");
+			return;
+		}
+		controller.setConfigWithoutRestart({
+			...this.config,
+			criticalHit: parseFloat(config.criticalHit),
+			determination: parseFloat(config.determination),
+			directHit: parseFloat(config.directHit),
+		});
+		controller.updateAllDisplay();
+	}
+
 	setConfigAndRestart(config) {
 		if (isNaN(parseFloat(config.spellSpeed)) ||
-			isNaN(parseFloat(config.criticalHit)) ||
-			isNaN(parseFloat(config.directHit)) ||
-			isNaN(parseFloat(config.determination)) ||
 			isNaN(parseFloat(config.animationLock)) ||
 			isNaN(parseFloat(config.casterTax)) ||
 			isNaN(parseFloat(config.timeTillFirstManaTick)) ||
@@ -645,10 +671,8 @@ export class Config extends React.Component {
 			config.initialResourceOverrides = [];
 		}
 		controller.setConfigAndRestart({
+			...this.config,
 			spellSpeed: parseFloat(config.spellSpeed),
-			criticalHit: parseFloat(config.criticalHit),
-			directHit: parseFloat(config.directHit),
-			determination: parseFloat(config.determination),
 			animationLock: parseFloat(config.animationLock),
 			casterTax: parseFloat(config.casterTax),
 			timeTillFirstManaTick: parseFloat(config.timeTillFirstManaTick),
@@ -656,7 +680,7 @@ export class Config extends React.Component {
 			randomSeed: config.randomSeed.trim(),
 			procMode: config.procMode,
 			extendedBuffTimes: config.extendedBuffTimes,
-			initialResourceOverrides: config.initialResourceOverrides // info only
+			initialResourceOverrides: config.initialResourceOverrides, // info only
 		});
 		controller.updateAllDisplay();
 	}
@@ -668,9 +692,6 @@ export class Config extends React.Component {
 	render() {
 		let editSection = <div>
 			<Input defaultValue={this.state.spellSpeed} description={localize({en: "spell speed: " , zh: "咏速："})} onChange={this.setSpellSpeed}/>
-			<Input defaultValue={this.state.criticalHit} description={localize({en: "crit: " , zh: "暴击："})} onChange={this.setCriticalHit}/>
-			<Input defaultValue={this.state.directHit} description={localize({en: "direct hit: " , zh: "直击："})} onChange={this.setDirectHit}/>
-			<Input defaultValue={this.state.determination} description={localize({en: "determination: " , zh: "det:"})} onChange={this.setDetermination}/>
 			<Input defaultValue={this.state.animationLock} description={localize({en: "animation lock: ", zh: "能力技后摇："})} onChange={this.setAnimationLock}/>
 			<Input defaultValue={this.state.casterTax} description={localize({en: "caster tax: ", zh: "读条税："})} onChange={this.setCasterTax}/>
 			<Input defaultValue={this.state.timeTillFirstManaTick} description={localize({en: "time till first MP tick: ", zh: "距首次跳蓝时间："})} onChange={this.setTimeTillFirstManaTick}/>
@@ -715,13 +736,22 @@ export class Config extends React.Component {
 				}/></span>
 			</div>
 			{this.#resourceOverridesSection()}
-			<button onClick={this.handleSubmit}>{localize({en: "apply and reset", zh: "应用并重置时间轴"})}</button>
+			<button onClick={this.submitAndReset}>{localize({en: "apply and reset", zh: "应用并重置时间轴"})}</button>
 		</div>;
+
+		let damageSection = <div>
+			<Input defaultValue={this.state.criticalHit} description={localize({en: "crit: " , zh: "暴击："})} onChange={this.setCriticalHit}/>
+			<Input defaultValue={this.state.determination} description={localize({en: "determination: " , zh: "det:"})} onChange={this.setDetermination}/>
+			<Input defaultValue={this.state.directHit} description={localize({en: "direct hit: " , zh: "直击："})} onChange={this.setDirectHit}/>
+			<button onClick={this.submitWithoutReset}>{localize({en: "apply", zh: "apply"})}</button>
+		</div>
+
 		return (
 			<div className={"config"} style={{marginBottom: 16}}>
 				<div style={{marginBottom: 5}}><b>{localize({en: "Config", zh: "设置"})}</b></div>
 				<ConfigSummary/> {/* retrieves data from global controller */}
-				<Expandable title={"Edit"} titleNode={localize({en: "Edit", zh: "编辑"}) + (this.state.dirty ? "*" : "")} content={editSection}/>
+				<Expandable title={"Edit"} titleNode={localize({en: "Edit", zh: "编辑"}) + (this.state.dirtyEdit ? "*" : "")} content={editSection}/>
+				<Expandable title={"Damage"} titleNode={localize({en: "Damage", zh: "Damage"}) + (this.state.dirtyDamage ? "*" : "")} content={damageSection}/>
 			</div>
 		)}
 }

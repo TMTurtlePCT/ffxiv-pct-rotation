@@ -729,6 +729,18 @@ class Controller {
 		this.autoSave();
 	}
 
+	setConfigWithoutRestart(props={
+		criticalHit: DEFAULT_CONFIG.criticalHit,
+		determination: DEFAULT_CONFIG.determination,
+		directHit: DEFAULT_CONFIG.directHit,
+	}) {
+		this.gameConfig.criticalHit = props.criticalHit;
+		this.gameConfig.determination = props.determination;
+		this.gameConfig.directHit = props.directHit;
+
+		this.autoSave();
+	}
+
 	getDisplayedGame() : GameState {
 		return this.displayingUpToDateGameState ? this.game : this.savedHistoricalGame;
 	}
