@@ -71,17 +71,17 @@ const skillInfos = [
 	// TODO get 3rd digit of precision
 	// https://docs.google.com/spreadsheets/d/1Emevsz5_oJdmkXy23hZQUXimirZQaoo5BejSzL3hZ9I/edit?gid=543259752#gid=543259752
 	new SkillInfo(SkillName.FireInRed, ResourceType.cd_GCD, Aspect.Other, true,
-		1.5, 300, 440, 0.84),
+		1.5, 300, 340, 0.84),
 	new SkillInfo(SkillName.AeroInGreen, ResourceType.cd_GCD, Aspect.Other, true,
-		1.5, 300, 480, 0.89),
+		1.5, 300, 380, 0.89),
 	new SkillInfo(SkillName.TemperaCoat, ResourceType.cd_TemperaCoat, Aspect.Other, false,
 		0, 0, 0), // instant
 	new SkillInfo(SkillName.WaterInBlue, ResourceType.cd_GCD, Aspect.Other, true,
-		1.5, 300, 520, 0.98),
+		1.5, 300, 420, 0.98),
 	new SkillInfo(SkillName.Smudge, ResourceType.cd_Smudge, Aspect.Other, false,
 		0, 0, 0), // instant (buff application)
 	new SkillInfo(SkillName.Fire2InRed, ResourceType.cd_GCD, Aspect.Other, true,
-		1.5, 300, 120, 0.84),
+		1.5, 300, 100, 0.84),
 	new SkillInfo(SkillName.CreatureMotif, ResourceType.cd_GCD, Aspect.Other, true,
 		3, 0, 0, 0.00, 4),
 	new SkillInfo(SkillName.LivingMuse, ResourceType.cd_LivingMuse, Aspect.Other, false,
@@ -97,9 +97,9 @@ const skillInfos = [
 	new SkillInfo(SkillName.WingedMuse, ResourceType.cd_LivingMuse, Aspect.Other, false,
 		0, 0, 1100, 0.98),
 	new SkillInfo(SkillName.Aero2InGreen, ResourceType.cd_GCD, Aspect.Other, true,
-		1.5, 300, 140, 0.89),
+		1.5, 300, 120, 0.89),
 	new SkillInfo(SkillName.Water2InBlue, ResourceType.cd_GCD, Aspect.Other, true,
-		1.5, 300, 160, 0.98),
+		1.5, 300, 140, 0.98),
 	new SkillInfo(SkillName.WeaponMotif, ResourceType.cd_GCD, Aspect.Other, true,
 		3, 0, 0, 0.00, 4),
 	new SkillInfo(SkillName.SteelMuse, ResourceType.cd_SteelMuse, Aspect.Other, false,
@@ -109,19 +109,19 @@ const skillInfos = [
 	new SkillInfo(SkillName.StrikingMuse, ResourceType.cd_SteelMuse, Aspect.Other, false,
 		0, 0, 0),
 	new SkillInfo(SkillName.BlizzardInCyan, ResourceType.cd_GCD, Aspect.Other, true,
-		2.3, 400, 800, 0.75, 3.3),
+		2.3, 400, 630, 0.75, 3.3),
 	new SkillInfo(SkillName.Blizzard2InCyan, ResourceType.cd_GCD, Aspect.Other, true,
-		2.3, 400, 240, 0.75, 3.3),
+		2.3, 400, 220, 0.75, 3.3),
 	new SkillInfo(SkillName.SubtractivePalette, ResourceType.cd_Subtractive, Aspect.Other, false,
 		0, 0, 0),
 	new SkillInfo(SkillName.StoneInYellow, ResourceType.cd_GCD, Aspect.Other, true,
-		2.3, 400, 840, 0.80, 3.3),
+		2.3, 400, 670, 0.80, 3.3),
 	new SkillInfo(SkillName.Stone2InYellow, ResourceType.cd_GCD, Aspect.Other, true,
-		2.3, 400, 260, 0.80, 3.3),
+		2.3, 400, 240, 0.80, 3.3),
 	new SkillInfo(SkillName.ThunderInMagenta, ResourceType.cd_GCD, Aspect.Other, true,
-		2.3, 400, 880, 0.85, 3.3),
+		2.3, 400, 710, 0.85, 3.3),
 	new SkillInfo(SkillName.Thunder2InMagenta, ResourceType.cd_GCD, Aspect.Other, true,
-		2.3, 400, 280, 0.85, 3.3),
+		2.3, 400, 260, 0.85, 3.3),
 	new SkillInfo(SkillName.LandscapeMotif, ResourceType.cd_GCD, Aspect.Other, true,
 		3, 0, 0, 0.00, 4),
 	new SkillInfo(SkillName.ScenicMuse, ResourceType.cd_ScenicMuse, Aspect.Other, false,
@@ -133,7 +133,7 @@ const skillInfos = [
 	new SkillInfo(SkillName.HolyInWhite, ResourceType.cd_GCD, Aspect.Other, true,
 		0, 300, 520, 1.34),
 	new SkillInfo(SkillName.HammerStamp, ResourceType.cd_GCD, Aspect.Hammer, true,
-		0, 300, 560, 1.38),
+		0, 300, 480, 1.38),
 	new SkillInfo(SkillName.HammerBrush, ResourceType.cd_GCD, Aspect.Hammer, true,
 		0, 300, 620, 1.25),
 	new SkillInfo(SkillName.PolishingHammer, ResourceType.cd_GCD, Aspect.Hammer, true,
@@ -340,7 +340,7 @@ export class SkillsList extends Map<SkillName, Skill> {
 						if (game.resources.get(ResourceType.MonochromeTones).available(1)) {
 							controller.reportWarning(WarningType.CometOverwrite);
 						}
-						game.resources.get(ResourceType.MonochromeTones).gain(1);
+						// game.resources.get(ResourceType.MonochromeTones).gain(1);
 						game.resources.get(ResourceType.SubtractivePalette).gain(3);
 					},
 					dealDamage: false,
@@ -413,13 +413,14 @@ export class SkillsList extends Map<SkillName, Skill> {
 							// wing: make moogle portrait available (overwrites madeen)
 							if (museName === SkillName.WingedMuse) {
 								portraits.overrideCurrentValue(1);
+								depictions.overrideCurrentValue(0)
 							}
-							// maw: make madeen portrait available (overwrites moogle)
-							// reset depictions to empty
-							if (museName === SkillName.FangedMuse) {
-								portraits.overrideCurrentValue(2);
-								depictions.overrideCurrentValue(0);
-							}
+							// // maw: make madeen portrait available (overwrites moogle)
+							// // reset depictions to empty
+							// if (museName === SkillName.FangedMuse) {
+							// 	portraits.overrideCurrentValue(2);
+							// 	depictions.overrideCurrentValue(0);
+							// }
 						},
 						dealDamage: true,
 						node: node,
@@ -449,18 +450,18 @@ export class SkillsList extends Map<SkillName, Skill> {
 			SkillName.CreatureMotif,
 			SkillName.PomMotif,
 			SkillName.WingMotif,
-			SkillName.ClawMotif,
-			SkillName.MawMotif,
+			// SkillName.ClawMotif,
+			// SkillName.MawMotif,
 		].forEach(addCreatureMotif);
 		[
 			SkillName.LivingMuse,
 			SkillName.PomMuse,
 			SkillName.WingedMuse,
-			SkillName.ClawedMuse,
-			SkillName.FangedMuse,
+			// SkillName.ClawedMuse,
+			// SkillName.FangedMuse,
 		].forEach(addLivingMuse);
 		addLaser(SkillName.MogOfTheAges);
-		addLaser(SkillName.RetributionOfTheMadeen);
+		// addLaser(SkillName.RetributionOfTheMadeen);
 
 		// Starry Sky Motif + fake landscape motif
 		let addLandscape = function(motifName: SkillName) {
@@ -492,9 +493,9 @@ export class SkillsList extends Map<SkillName, Skill> {
 							// Since this fork is hacky we just ignore this case for now.
 							game.resources.get(ResourceType.StarryMuse).gain(1);
 							// Technically, hyperphantasia is gained on a delay, but whatever
-							game.resources.get(ResourceType.Hyperphantasia).gain(5);
-							game.resources.get(ResourceType.Inspiration).gain(1);
-							game.resources.get(ResourceType.Starstruck).gain(1);
+							// game.resources.get(ResourceType.Hyperphantasia).gain(5);
+							// game.resources.get(ResourceType.Inspiration).gain(1);
+							// game.resources.get(ResourceType.Starstruck).gain(1);
 							game.resources.get(ResourceType.SubtractiveSpectrum).gain(1);
 							// TODO check actual lengths on other buffs (don't really matter as much)
 							game.resources.addResourceEvent({
@@ -630,7 +631,7 @@ export class SkillsList extends Map<SkillName, Skill> {
 		));
 
 		// Addle
-		addResourceAbility({skillName: SkillName.Addle, rscType: ResourceType.Addle, instant: false, duration: 15});
+		addResourceAbility({skillName: SkillName.Addle, rscType: ResourceType.Addle, instant: false, duration: 10});
 
 		// Swiftcast
 		addResourceAbility({skillName: SkillName.Swiftcast, rscType: ResourceType.Swiftcast, instant: true, duration: 10});

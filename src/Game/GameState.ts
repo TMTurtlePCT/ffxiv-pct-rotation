@@ -100,7 +100,7 @@ export class GameState {
 		this.cooldowns.set(ResourceType.cd_Amplifier, new CoolDown(ResourceType.cd_Amplifier, 120, 1, 1));
 		this.cooldowns.set(ResourceType.cd_Retrace, new CoolDown(ResourceType.cd_Amplifier, 40, 1, 1));
 		this.cooldowns.set(ResourceType.cd_Addle, new CoolDown(ResourceType.cd_Addle, 90, 1, 1));
-		this.cooldowns.set(ResourceType.cd_Swiftcast, new CoolDown(ResourceType.cd_Swiftcast, 40, 1, 1));
+		this.cooldowns.set(ResourceType.cd_Swiftcast, new CoolDown(ResourceType.cd_Swiftcast, 60, 1, 1));
 		this.cooldowns.set(ResourceType.cd_LucidDreaming, new CoolDown(ResourceType.cd_LucidDreaming, 60, 1, 1));
 		this.cooldowns.set(ResourceType.cd_Surecast, new CoolDown(ResourceType.cd_Surecast, 120, 1, 1));
 		this.cooldowns.set(ResourceType.cd_Tincture, new CoolDown(ResourceType.cd_Tincture, 270, 1, 1));
@@ -108,9 +108,9 @@ export class GameState {
 
 		this.cooldowns.set(ResourceType.cd_TemperaCoat, new CoolDown(ResourceType.cd_TemperaCoat, 120, 1, 1));
 		this.cooldowns.set(ResourceType.cd_Smudge, new CoolDown(ResourceType.cd_Smudge, 20, 1, 1));
-		this.cooldowns.set(ResourceType.cd_LivingMuse, new CoolDown(ResourceType.cd_LivingMuse, 40, 3, 3));
+		this.cooldowns.set(ResourceType.cd_LivingMuse, new CoolDown(ResourceType.cd_LivingMuse, 40, 2, 2));
 		this.cooldowns.set(ResourceType.cd_Portrait, new CoolDown(ResourceType.cd_Portrait, 30, 1, 1));
-		this.cooldowns.set(ResourceType.cd_SteelMuse, new CoolDown(ResourceType.cd_SteelMuse, 60, 2, 2));
+		this.cooldowns.set(ResourceType.cd_SteelMuse, new CoolDown(ResourceType.cd_SteelMuse, 60, 1, 1));
 		this.cooldowns.set(ResourceType.cd_ScenicMuse, new CoolDown(ResourceType.cd_ScenicMuse, 120, 1, 1));
 		// TODO handle these differently
 		this.cooldowns.set(ResourceType.cd_Subtractive, new CoolDown(ResourceType.cd_Subtractive, 1, 1, 1));

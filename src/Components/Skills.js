@@ -15,9 +15,9 @@ export let displayedSkills = [
 	SkillName.BlizzardInCyan,
 	SkillName.Blizzard2InCyan,
 	SkillName.HolyInWhite,
-	SkillName.CometInBlack,
-	SkillName.RainbowDrip,
-	SkillName.StarPrism,
+	// SkillName.CometInBlack,
+	// SkillName.RainbowDrip,
+	// SkillName.StarPrism,
 	// SkillName.TemperaCoat,
 	// SkillName.TemperaGrassa,
 	// SkillName.Smudge,
@@ -444,12 +444,12 @@ export class SkillsWindow extends React.Component {
 					case 1:
 						skillName = SkillName.WingMotif;
 						break;
-					case 2:
-						skillName = SkillName.ClawMotif;
-						break;
-					case 3:
-						skillName = SkillName.MawMotif;
-						break;
+					// case 2:
+					// 	skillName = SkillName.ClawMotif;
+					// 	break;
+					// case 3:
+					// 	skillName = SkillName.MawMotif;
+					// 	break;
 				}
 			}
 
@@ -504,12 +504,12 @@ export class SkillsWindow extends React.Component {
 			}
 
 			if (skillName === SkillName.HammerStamp) {
-				// TODO handle combo drop
-				if (this.state.hammerStacks === 2) {
-					skillName = SkillName.HammerBrush;
-				} else if (this.state.hammerStacks === 1) {
-					skillName = SkillName.PolishingHammer;
-				}
+				// // TODO handle combo drop
+				// if (this.state.hammerStacks === 2) {
+				// 	skillName = SkillName.HammerBrush;
+				// } else if (this.state.hammerStacks === 1) {
+				// 	skillName = SkillName.PolishingHammer;
+				// }
 			}
 
 			let btn = <SkillButton
