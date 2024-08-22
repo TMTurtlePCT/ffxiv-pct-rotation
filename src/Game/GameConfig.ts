@@ -99,7 +99,7 @@ export class GameConfig {
 	}
 
 	adjustedDoTPotency(inPotency : number) {
-		let dotStrength = (1000 + Math.floor((this.spellSpeed - 420) * 130 / 2780.0)) * 0.001;
+		let dotStrength = (1000 + Math.floor((this.spellSpeed - 380) * 130 / 1300.0)) * 0.001;
 		return inPotency * dotStrength;
 	}
 
@@ -107,12 +107,12 @@ export class GameConfig {
 	adjustedGCD(hasLL: boolean, hasHP?: boolean, recast?: number) {
 		let baseGCD = recast || 2.5;
 		let subtractLL = hasHP ? 25 : (hasLL ? 15 : 0);
-		return Math.floor(Math.floor(Math.floor((100-subtractLL)*100/100)*Math.floor((2000-Math.floor(130*(this.spellSpeed-380)/3300+1000))*(1000*baseGCD)/10000)/100)*100/100)/100;
+		return Math.floor(Math.floor(Math.floor((100-subtractLL)*100/100)*Math.floor((2000-Math.floor(130*(this.spellSpeed-380)/1300+1000))*(1000*baseGCD)/10000)/100)*100/100)/100;
 	}
 
 	adjustedCastTime(inCastTime : number, hasLL: boolean, inspired?: boolean) {
 		let subtractLL = inspired ? 25 : (hasLL ? 15 : 0);
-		return Math.floor(Math.floor(Math.floor((100-subtractLL)*100/100)*Math.floor((2000-Math.floor(130*(this.spellSpeed-380)/3300+1000))*(1000*inCastTime)/1000)/100)*100/100)/1000;
+		return Math.floor(Math.floor(Math.floor((100-subtractLL)*100/100)*Math.floor((2000-Math.floor(130*(this.spellSpeed-380)/1300+1000))*(1000*inCastTime)/1000)/100)*100/100)/1000;
 	}
 
 	getSkillAnimationLock(skillName : SkillName) : number {

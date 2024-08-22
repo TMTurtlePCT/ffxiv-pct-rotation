@@ -207,22 +207,22 @@ export class Potency {
 	}
 
 	#criticalHitRate(crit: number) {
-		return (Math.floor(200 * (crit-420) / 2780) + 50) * 0.001;
+		return (Math.floor(200 * (crit-380) / 1300) + 50) * 0.001;
 	}
 
 	#criticalHitStrength(crit: number) {
-		return (Math.floor(200 * (crit-420) / 2780) + 1400) * 0.001;
+		return (Math.floor(200 * (crit-380) / 1300) + 1400) * 0.001;
 	}
 
 	#directHitRate(dh: number) {
-		return Math.floor(550 * (dh-420) / 2780) * 0.001;
+		return Math.floor(550 * (dh-380) / 1300) * 0.001;
 	}
 
 	#autoMultiDH(dh: number) {
-		return Math.floor(140 * (dh-420) / 2780) * 0.001;
+		return Math.floor(140 * (dh-380) / 1300) * 0.001;
 	}
 
 	#autoMultiDet(det: number) {
-		return Math.floor(140 * (det-440) / 2780) * 0.001;
+		return Math.floor(140 * (det-340) / 1300) * 0.001;
 	}
 }
