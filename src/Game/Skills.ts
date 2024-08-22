@@ -502,18 +502,18 @@ export class SkillsList extends Map<SkillName, Skill> {
 								rscType: ResourceType.StarryMuse,
 								name: "drop starry muse", delay: game.config.extendedBuffTimes ? 20.5 : 20, fnOnRsc: (rsc: Resource) => rsc.consume(1),
 							});
-							game.resources.addResourceEvent({
-								rscType: ResourceType.Hyperphantasia,
-								name: "drop hyperphantasia", delay: 30, fnOnRsc: (rsc: Resource) => rsc.overrideCurrentValue(0),
-							});
-							game.resources.addResourceEvent({
-								rscType: ResourceType.Inspiration,
-								name: "drop inspiration", delay: 30, fnOnRsc: (rsc: Resource) => rsc.consume(1),
-							});
-							game.resources.addResourceEvent({
-								rscType: ResourceType.Starstruck,
-								name: "drop starstruck", delay: 20, fnOnRsc: (rsc: Resource) => rsc.consume(1),
-							});
+							// game.resources.addResourceEvent({
+							// 	rscType: ResourceType.Hyperphantasia,
+							// 	name: "drop hyperphantasia", delay: 30, fnOnRsc: (rsc: Resource) => rsc.overrideCurrentValue(0),
+							// });
+							// game.resources.addResourceEvent({
+							// 	rscType: ResourceType.Inspiration,
+							// 	name: "drop inspiration", delay: 30, fnOnRsc: (rsc: Resource) => rsc.consume(1),
+							// });
+							// game.resources.addResourceEvent({
+							// 	rscType: ResourceType.Starstruck,
+							// 	name: "drop starstruck", delay: 20, fnOnRsc: (rsc: Resource) => rsc.consume(1),
+							// });
 							game.resources.addResourceEvent({
 								rscType: ResourceType.SubtractiveSpectrum,
 								name: "drop subtractive spectrum", delay: 30, fnOnRsc: (rsc: Resource) => rsc.consume(1),
