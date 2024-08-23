@@ -131,7 +131,7 @@ const skillInfos = [
 	new SkillInfo(SkillName.StarryMuse, ResourceType.cd_ScenicMuse, Aspect.Other, false,
 		0, 0, 0), // raid buff is instant, but cast buff is delayed by 0.62
 	new SkillInfo(SkillName.HolyInWhite, ResourceType.cd_GCD, Aspect.Other, true,
-		0, 300, 520, 1.34),
+		0, 300, 420, 1.34),
 	new SkillInfo(SkillName.HammerStamp, ResourceType.cd_GCD, Aspect.Hammer, true,
 		0, 300, 480, 1.38),
 	new SkillInfo(SkillName.HammerBrush, ResourceType.cd_GCD, Aspect.Hammer, true,
